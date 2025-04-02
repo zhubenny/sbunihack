@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareConnect</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<style>
+    /* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: blue;
+    color: white;
+
+    /* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+  }
+</style>
+<body>
+    <div class="topnav">
+        <a class="active" href="index.html">User Database</a>
+        <a href="medi.html">Medical Database</a>
+        <a href="vscripts.html">Verified Scripts</a>
+        <a href="#about">Contact</a>
+      </div>
+    <div class="container mt-5">
+        <h2>WhatsApp AI Bot Audit Logs</h2>
+        <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Sender</th>
+                    <th>Message</th>
+                    <th>Response</th>
+                    <th>Timestamp</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>I have ear pain.</td>
+                    <td>Do you have pain in one or both ears?</td>
+                    <td>2025-04-02 09:00:10</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>Just my right ear.</td>
+                    <td>How long have you been experiencing ear pain?</td>
+                    <td>2025-04-02 09:00:30</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>More than 3 days.</td>
+                    <td>Do you have fever, dizziness, or nausea?</td>
+                    <td>2025-04-02 09:01:00</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>Yes, I feel dizzy and have a mild fever.</td>
+                    <td>Do you feel fullness or pressure in your ear?</td>
+                    <td>2025-04-02 09:01:25</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>Yes, it feels blocked.</td>
+                    <td>Are you experiencing hearing loss or muffled sound?</td>
+                    <td>2025-04-02 09:01:50</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>A little, yes.</td>
+                    <td>Is there any fluid, pus, or blood draining?</td>
+                    <td>2025-04-02 09:02:15</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>No, no discharge.</td>
+                    <td>Have you had a cold, sinus infection, or allergies?</td>
+                    <td>2025-04-02 09:02:40</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>Yes, I had a cold last week.</td>
+                    <td>You may have a middle ear infection (Otitis Media). If pain worsens, see a doctor.</td>
+                    <td>2025-04-02 09:03:10</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0301015800087</td>
+                    <td>What should I do now?</td>
+                    <td>Try pain relievers, warm compresses, and rest. If symptoms persist, consult a doctor.</td>
+                    <td>2025-04-02 09:03:40</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>020312345678</td>
+                    <td>I have a cough and fever.</td>
+                    <td>Do you also have shortness of breath or difficulty breathing?</td>
+                    <td>2025-04-02 10:00:10</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>020312345678</td>
+                    <td>Yes, I feel breathless when I walk.</td>
+                    <td>Do you have body aches, chills, or fatigue?</td>
+                    <td>2025-04-02 10:00:30</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>020312345678</td>
+                    <td>Yes, I feel very tired.</td>
+                    <td>Have you recently lost your sense of taste or smell?</td>
+                    <td>2025-04-02 10:01:00</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>020312345678</td>
+                    <td>Yes, I can't taste anything.</td>
+                    <td>You may have COVID-19. Please isolate and get tested as soon as possible.</td>
+                    <td>2025-04-02 10:01:25</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>020312345678</td>
+                    <td>What should I do now?</td>
+                    <td>Stay hydrated, rest, and monitor your symptoms. Seek medical attention if breathing worsens.</td>
+                    <td>2025-04-02 10:01:50</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>040612345678</td>
+                  <td>I have diarrhea and stomach cramps.</td>
+                  <td>How long have you been experiencing diarrhea?</td>
+                  <td>2025-04-02 11:00:10</td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>040612345678</td>
+                  <td>Since yesterday.</td>
+                  <td>Do you have fever, nausea, or vomiting?</td>
+                  <td>2025-04-02 11:00:30</td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>040612345678</td>
+                  <td>Yes, I feel nauseous but haven't vomited.</td>
+                  <td>Have you recently eaten any suspicious or undercooked food?</td>
+                  <td>2025-04-02 11:01:00</td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>040612345678</td>
+                  <td>Yes, I had takeout last night.</td>
+                  <td>You may have food poisoning or a stomach infection. Stay hydrated and monitor your symptoms.</td>
+                  <td>2025-04-02 11:01:25</td>
+              </tr>
+              <tr>
+                  <td>3</td>
+                  <td>040612345678</td>
+                  <td>What should I do now?</td>
+                  <td>Drink fluids, avoid solid food for a few hours, and see a doctor if symptoms worsen.</td>
+                  <td>2025-04-02 11:01:50</td>
+              </tr>
+            </table>
+    </div>
+</body>
+</html>
+
+</body>
+</html>
