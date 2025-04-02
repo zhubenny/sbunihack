@@ -4,269 +4,472 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CareConnect</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            background-color: #f5f7fa;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin: 15px 0;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin: 12px 0 8px 0;
+            font-size: 18px;
+        }
+        
+        /* Modern top navigation styling - full width */
+        .topnav {
+            background-color: #2c3e50;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Navigation container to center links if desired */
+        .nav-container {
+            width: 100%;
+            display: flex;
+        }
+
+        /* Style the links inside the navigation bar */
+        .topnav a {
+            float: left;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 16px 18px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        /* Change the color of links on hover */
+        .topnav a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #3498db;
+        }
+
+        /* Add a color to the active/current link */
+        .topnav a.active {
+            background-color: #3498db; 
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Active link hover */
+        .topnav a.active:hover {
+            background-color: #2980b9;
+        }
+
+        /* Add subtle indicator under links on hover */
+        .topnav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        .topnav a:hover:after {
+            width: 100%;
+        }
+        
+        .search-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .search-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex-grow: 1;
+            font-size: 16px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        #results, #diseaseInfo {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .result-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .loading {
+            margin: 20px 0;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #e74c3c;
+            padding: 10px;
+            background-color: #fadbd8;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .disease-info {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .disease-description {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .symptoms-list {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .symptoms-list li {
+            margin-bottom: 5px;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-right: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        /* Responsive navigation */
+        @media screen and (max-width: 600px) {
+            .topnav a {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                padding: 14px 16px;
+            }
+            
+            .search-group {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
-<style>
-
-/* Modern top navigation styling */
-.topnav {
-  background-color: #2c3e50;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  border-radius: 4px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  color: #ecf0f1;
-  text-align: center;
-  padding: 16px 18px;
-  text-decoration: none;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  letter-spacing: 0.5px;
-  position: relative;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: rgba(255,255,255,0.1);
-  color: #3498db;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #3498db; 
-  color: white;
-  font-weight: 500;
-}
-
-/* Active link hover */
-.topnav a.active:hover {
-  background-color: #2980b9;
-}
-
-/* Add subtle indicator under links on hover */
-.topnav a:after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: 0;
-  left: 0;
-  background-color: #3498db;
-  transition: width 0.3s ease;
-}
-
-.topnav a:hover:after {
-  width: 100%;
-}
-
-/* Responsive navigation */
-@media screen and (max-width: 600px) {
-  .topnav a {
-    float: none;
-    display: block;
-    text-align: left;
-    width: 100%;
-    padding: 14px 16px;
-  }
-}
-/* The side navigation menu */
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-}
-
-/* Sidebar links */
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-}
-
-/* Active/current link */
-.sidebar a.active {
-  background-color: blue;
-  color: white;
-}
-
-/* Links on mouse-over */
-.sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
-}
-
-/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
-div.content {
-  margin-left: 200px;
-  padding: 1px 16px;
-  height: 1000px;
-}
-
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {float: left;}
-  div.content {margin-left: 0;}
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
-</style>
 <body>
-       <div class="topnav">
-        <a href="index.html">User Database</a>
-        <a class="active" href="medi.html">Medical Database</a>
-        <a href="vscripts.html">Verified Scripts</a>
-        <a href="#about">Contact</a>
-      </div> 
+    <div class="topnav">
+        <div class="nav-container">
+            <a href="index.html">User Database</a>
+            <a class="active" href="medi.html">Medical Database</a>
+            <a href="vscripts.html">Verified Scripts</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1>Disease and Treatment Information Portal</h1>
+        
+        <div class="search-container">
+            <h2>Search for Disease Information and Treatments</h2>
+            <div class="search-group">
+                <input type="text" id="diseaseInput" placeholder="Enter chronic disease (e.g., diabetes, hypertension)">
+                <button onclick="searchDisease()">Search</button>
+            </div>
+            <div id="loading" class="loading" style="display: none;">Searching databases...</div>
+            <div id="error" class="error" style="display: none;"></div>
+        </div>
+        
+        <div id="diseaseInfo" style="display: none;"></div>
+        <div id="results"></div>
+    </div>
 
-          <title>OpenFDA Chronic Disease Search</title>
-          <style>
-              body {
-                  font-family: Arial, sans-serif;
-                  max-width: 800px;
-                  margin: 0 auto;
-                  padding: 20px;
-              }
-              h1 {
-                  color: #2c3e50;
-              }
-              .input-group {
-                  margin-bottom: 20px;
-              }
-              input[type="text"] {
-                  padding: 8px;
-                  width: 300px;
-                  border: 1px solid #ccc;
-                  border-radius: 4px;
-              }
-              button {
-                  padding: 8px 16px;
-                  background-color: #3498db;
-                  color: white;
-                  border: none;
-                  border-radius: 4px;
-                  cursor: pointer;
-              }
-              button:hover {
-                  background-color: #2980b9;
-              }
-              #results {
-                  margin-top: 20px;
-              }
-              .result-item {
-                  padding: 10px;
-                  margin-bottom: 10px;
-                  background-color: #f9f9f9;
-                  border-radius: 4px;
-              }
-              .loading {
-                  margin-top: 20px;
-                  color: #7f8c8d;
-              }
-              .error {
-                  color: #e74c3c;
-              }
-          </style>
-      </head>
-      <body>
-          <h1>OpenFDA Chronic Disease Drug Search</h1>
-          
-          <div class="input-group">
-              <input type="text" id="diseaseInput" placeholder="Enter chronic disease (e.g., diabetes, hypertension)">
-              <button onclick="searchDisease()">Search</button>
-          </div>
-          
-          <div id="loading" class="loading" style="display: none;">Searching...</div>
-          <div id="error" class="error" style="display: none;"></div>
-          <div id="results"></div>
-      
-          <script>
-              function searchDisease() {
-                  const chronicDisease = document.getElementById('diseaseInput').value.trim();
-                  if (!chronicDisease) {
-                      document.getElementById('error').textContent = 'Please enter a chronic disease';
-                      document.getElementById('error').style.display = 'block';
-                      return;
-                  }
-                  
-                  document.getElementById('error').style.display = 'none';
-                  document.getElementById('results').innerHTML = '';
-                  document.getElementById('loading').style.display = 'block';
-                  
-                  // Build the OpenFDA API URL with proper encoding
-                  const apiKey = 'https://api.fda.gov/drug/label.json';
-                  const query = `?search=indications_and_usage:${encodeURIComponent(chronicDisease)}&limit=10`;
-                  const url = apiKey + query;
-                  
-                  fetch(url)
-                      .then(response => {
-                          if (!response.ok) {
-                              throw new Error(`HTTP error! Status: ${response.status}`);
-                          }
-                          return response.json();
-                      })
-                      .then(data => {
-                          document.getElementById('loading').style.display = 'none';
-                          
-                          if (data.results && data.results.length > 0) {
-                              const resultsDiv = document.getElementById('results');
-                              resultsDiv.innerHTML = `<h2>Drugs for ${chronicDisease} (Generic Names Only)</h2>`;
-                              
-                              data.results.forEach(drug => {
-                                  // Extract the generic name from the openfda object if available
-                                  if (drug.openfda && drug.openfda.generic_name) {
-                                      const genericName = drug.openfda.generic_name[0];
-                                      const resultItem = document.createElement('div');
-                                      resultItem.className = 'result-item';
-                                      resultItem.textContent = genericName;
-                                      resultsDiv.appendChild(resultItem);
-                                  }
-                              });
-                              
-                              // Show message if no generic names were found
-                              if (resultsDiv.children.length === 1) { // Only the heading exists
-                                  const noResults = document.createElement('p');
-                                  noResults.textContent = 'No generic names found for the specified condition.';
-                                  resultsDiv.appendChild(noResults);
-                              }
-                          } else {
-                              document.getElementById('results').innerHTML = 
-                                  `<p>No results found for "${chronicDisease}". Try another search term.</p>`;
-                          }
-                      })
-                      .catch(error => {
-                          document.getElementById('loading').style.display = 'none';
-                          document.getElementById('error').textContent = 
-                              `Error fetching data: ${error.message}. The API might not have data for "${chronicDisease}" or there might be a connection issue.`;
-                          document.getElementById('error').style.display = 'block';
-                      });
-              }
-          </script>
-      </body>
-      </html>
-  <!-- Page content -->
-  <div class="content">
-    ..
-  </div>
+    <script>
+        // Disease information database (In a real app, this would come from an API)
+        const diseaseDatabase = {
+            "diabetes": {
+                name: "Diabetes Mellitus",
+                description: "Diabetes is a chronic health condition that affects how your body turns food into energy. Most of the food you eat is broken down into sugar (glucose) and released into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin. Insulin acts like a key to let the blood sugar into your body's cells for use as energy.",
+                symptoms: [
+                    "Increased thirst and urination",
+                    "Increased hunger",
+                    "Fatigue",
+                    "Blurred vision",
+                    "Numbness or tingling in feet or hands",
+                    "Unexplained weight loss",
+                    "Slow-healing sores"
+                ],
+                types: ["Type 1 Diabetes", "Type 2 Diabetes", "Gestational Diabetes"]
+            },
+            "hypertension": {
+                name: "Hypertension (High Blood Pressure)",
+                description: "Hypertension is a common condition in which the long-term force of the blood against your artery walls is high enough that it may eventually cause health problems, such as heart disease. Blood pressure is determined by the amount of blood your heart pumps and the amount of resistance to blood flow in your arteries.",
+                symptoms: [
+                    "Most people have no symptoms, even if blood pressure readings reach dangerously high levels",
+                    "Headaches",
+                    "Shortness of breath",
+                    "Nosebleeds"
+                ],
+                types: ["Primary (Essential) Hypertension", "Secondary Hypertension"]
+            },
+            "asthma": {
+                name: "Asthma",
+                description: "Asthma is a condition in which your airways narrow and swell and may produce extra mucus. This can make breathing difficult and trigger coughing, a whistling sound (wheezing) when you breathe out and shortness of breath.",
+                symptoms: [
+                    "Shortness of breath",
+                    "Chest tightness or pain",
+                    "Wheezing when exhaling",
+                    "Trouble sleeping caused by shortness of breath, coughing or wheezing",
+                    "Coughing or wheezing attacks worsened by respiratory virus"
+                ],
+                types: ["Allergic Asthma", "Non-allergic Asthma", "Exercise-induced Asthma"]
+            },
+            "arthritis": {
+                name: "Arthritis",
+                description: "Arthritis is the swelling and tenderness of one or more joints. The main symptoms of arthritis are joint pain and stiffness, which typically worsen with age. The most common types of arthritis are osteoarthritis and rheumatoid arthritis.",
+                symptoms: [
+                    "Pain",
+                    "Stiffness",
+                    "Swelling",
+                    "Redness",
+                    "Decreased range of motion"
+                ],
+                types: ["Osteoarthritis", "Rheumatoid Arthritis", "Psoriatic Arthritis", "Gout"]
+            },
+            "hypothyroidism": {
+                name: "Hypothyroidism (Underactive Thyroid)",
+                description: "Hypothyroidism is a condition in which the thyroid gland doesn't produce enough thyroid hormone. This condition can cause a number of health problems, such as obesity, joint pain, infertility and heart disease.",
+                symptoms: [
+                    "Fatigue",
+                    "Increased sensitivity to cold",
+                    "Constipation",
+                    "Dry skin",
+                    "Weight gain",
+                    "Puffy face",
+                    "Hoarseness",
+                    "Muscle weakness"
+                ],
+                types: ["Hashimoto's Thyroiditis", "Thyroiditis", "Congenital Hypothyroidism"]
+            }
+        };
+        
+        function searchDisease() {
+            const chronicDisease = document.getElementById('diseaseInput').value.trim().toLowerCase();
+            if (!chronicDisease) {
+                document.getElementById('error').textContent = 'Please enter a chronic disease';
+                document.getElementById('error').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('diseaseInfo').innerHTML = '';
+            document.getElementById('diseaseInfo').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            // First, try to find disease information in our database
+            displayDiseaseInfo(chronicDisease);
+            
+            // Then, search for medications
+            searchMedications(chronicDisease);
+        }
+        
+        function displayDiseaseInfo(disease) {
+            const diseaseInfoDiv = document.getElementById('diseaseInfo');
+            
+            // Find disease info based on keywords (case insensitive partial match)
+            const diseaseKey = Object.keys(diseaseDatabase).find(key => 
+                disease.includes(key) || key.includes(disease)
+            );
+            
+            if (diseaseKey) {
+                const info = diseaseDatabase[diseaseKey];
+                
+                let html = `
+                    <div class="disease-info">
+                        <h2>${info.name}</h2>
+                        <div class="disease-description">
+                            <p>${info.description}</p>
+                        </div>
+                        
+                        <h3>Common Symptoms</h3>
+                        <ul class="symptoms-list">
+                            ${info.symptoms.map(symptom => `<li>${symptom}</li>`).join('')}
+                        </ul>
+                        
+                        ${info.types ? `
+                            <h3>Types</h3>
+                            <ul class="symptoms-list">
+                                ${info.types.map(type => `<li>${type}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                    </div>
+                `;
+                
+                diseaseInfoDiv.innerHTML = html;
+                diseaseInfoDiv.style.display = 'block';
+            } else {
+                diseaseInfoDiv.style.display = 'none';
+            }
+        }
+        
+        function searchMedications(chronicDisease) {
+            // Build the OpenFDA API URL with proper encoding
+            const apiUrl = 'https://api.fda.gov/drug/label.json';
+            const query = `?search=indications_and_usage:${encodeURIComponent(chronicDisease)}&limit=10`;
+            const url = apiUrl + query;
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    if (data.results && data.results.length > 0) {
+                        const resultsDiv = document.getElementById('results');
+                        resultsDiv.innerHTML = `<h2>Medications for ${chronicDisease}</h2>`;
+                        
+                        // Track unique generic names to avoid duplicates
+                        const uniqueGenericNames = new Set();
+                        
+                        data.results.forEach(drug => {
+                            // Extract the generic name from the openfda object if available
+                            if (drug.openfda && drug.openfda.generic_name) {
+                                const genericName = drug.openfda.generic_name[0];
+                                
+                                // Only add if we haven't seen this generic name already
+                                if (!uniqueGenericNames.has(genericName)) {
+                                    uniqueGenericNames.add(genericName);
+                                    
+                                    // Create result item with more details
+                                    const resultItem = document.createElement('div');
+                                    resultItem.className = 'result-item';
+                                    
+                                    let resultContent = `<strong>${genericName}</strong>`;
+                                    
+                                    // Add indications if available
+                                    if (drug.indications_and_usage) {
+                                        resultContent += `<p><span class="section-title">Usage:</span> ${drug.indications_and_usage[0].split('.')[0]}.</p>`;
+                                    }
+                                    
+                                    // Add warnings if available
+                                    if (drug.warnings) {
+                                        const warningText = drug.warnings[0].split('.')[0];
+                                        resultContent += `<p><span class="section-title">Warning:</span> ${warningText}.</p>`;
+                                    }
+                                    
+                                    resultItem.innerHTML = resultContent;
+                                    resultsDiv.appendChild(resultItem);
+                                }
+                            }
+                        });
+                        
+                        // Show message if no generic names were found
+                        if (uniqueGenericNames.size === 0) {
+                            const noResults = document.createElement('p');
+                            noResults.textContent = 'No generic names found for the specified condition.';
+                            resultsDiv.appendChild(noResults);
+                        } else {
+                            // Add summary
+                            const summary = document.createElement('p');
+                            summary.style.marginTop = '20px';
+                            summary.textContent = `Found ${uniqueGenericNames.size} unique medications for ${chronicDisease}.`;
+                            resultsDiv.appendChild(summary);
+                        }
+                    } else {
+                        document.getElementById('results').innerHTML = 
+                            `<p>No medication results found for "${chronicDisease}". Try another search term.</p>`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error').textContent = 
+                        `Error fetching medication data: ${error.message}. The API might not have data for "${chronicDisease}" or there might be a connection issue.`;
+                    document.getElementById('error').style.display = 'block';
+                });
+        }
+    </script>
 </body>
 </html>
