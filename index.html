@@ -132,54 +132,186 @@
     <div class="container mt-5">
         <h2>WhatsApp AI Bot Audit Logs</h2>
         
-        <div class="sender-search-container">
-          <div class="search-form">
-            <input type="text" id="sender-search-input" placeholder="Search by sender..." autocomplete="off">
-            <button type="button" id="clear-search">Clear</button>
+        <div class="search-container">
+          <!-- Table search -->
+          <div class="search-wrapper">
+            <div class="search-form">
+              <input type="text" id="sender-search-input" placeholder="Filter messages by sender..." autocomplete="off">
+              <button type="button" id="clear-search">Clear</button>
+            </div>
           </div>
+          
+          <!-- User details search -->
+          <div class="search-wrapper">
+            <div class="search-form">
+              <input type="text" id="user-details-input" placeholder="Search user by ID number..." autocomplete="off">
+              <button type="button" id="search-user">Search</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- User details container -->
+        <div id="user-details-container" class="user-details-container">
+          <!-- User details will be displayed here -->
         </div>
         
         <script>
         document.addEventListener('DOMContentLoaded', () => {
+          // Table filtering functionality
           const searchInput = document.getElementById('sender-search-input');
           const clearButton = document.getElementById('clear-search');
           const table = document.querySelector('.table');
           
-          // Search function
           function filterTable() {
             const searchTerm = searchInput.value.trim().toLowerCase();
-            const rows = table.querySelectorAll('tr:not(:first-child)'); // Skip header row
+            const rows = table.querySelectorAll('tr:not(:first-child)');
             
             rows.forEach(row => {
-              const senderCell = row.querySelector('td:nth-child(2)'); // Sender is the 2nd column
+              const senderCell = row.querySelector('td:nth-child(2)');
               
               if (senderCell) {
                 const senderText = senderCell.textContent.toLowerCase();
                 
                 if (searchTerm === '' || senderText.includes(searchTerm)) {
-                  row.style.display = ''; // Show row
+                  row.style.display = '';
                 } else {
-                  row.style.display = 'none'; // Hide row
+                  row.style.display = 'none';
                 }
               }
             });
           }
           
-          // Event listeners
           searchInput.addEventListener('input', filterTable);
           
-          // Clear search and reset table
           clearButton.addEventListener('click', () => {
             searchInput.value = '';
             filterTable();
+          });
+          
+          // Mock user database using South African ID numbers
+          const mockUserDatabase = {
+            '0301015800087': {
+              name: 'Sipho Mkhize',
+              email: 'sipho.mkhize@example.co.za',
+              phone: '073 123 4567',
+              location: 'Cape Town, Western Cape',
+              department: 'Engineering',
+              joinDate: '2022-03-15',
+              bio: 'Software developer with expertise in backend systems and database optimization.',
+              photoUrl: '/api/placeholder/150/150'
+            },
+            '020312345678': {
+              name: 'Thandi Nkosi',
+              email: 'thandi.nkosi@example.co.za',
+              phone: '082 456 7890',
+              location: 'Johannesburg, Gauteng',
+              department: 'Marketing',
+              joinDate: '2023-11-03',
+              bio: 'Digital marketing specialist with focus on social media campaigns and content strategy.',
+              photoUrl: '/api/placeholder/150/150'
+            },
+            '040612345678': {
+              name: 'Kagiso Molefe',
+              email: 'kagiso.molefe@example.co.za',
+              phone: '061 789 0123',
+              location: 'Durban, KwaZulu-Natal',
+              department: 'Customer Support',
+              joinDate: '2024-01-20',
+              bio: 'Customer support representative with excellent problem-solving skills and fluency in multiple South African languages.',
+              photoUrl: '/api/placeholder/150/150'
+            }
+          };
+          
+          // User details search functionality
+          const userDetailsInput = document.getElementById('user-details-input');
+          const searchUserButton = document.getElementById('search-user');
+          const userDetailsContainer = document.getElementById('user-details-container');
+          
+          function searchUserDetails() {
+            const searchTerm = userDetailsInput.value.trim().replace(/\s/g, '');
+            
+            // Clear previous results
+            userDetailsContainer.innerHTML = '';
+            
+            if (searchTerm === '') {
+              userDetailsContainer.innerHTML = '<p class="no-results">Please enter an ID number</p>';
+              return;
+            }
+            
+            // Check if the ID exists in our mock database
+            if (mockUserDatabase[searchTerm]) {
+              const user = mockUserDatabase[searchTerm];
+              
+              const userCard = `
+                <div class="user-card">
+                  <div class="user-photo">
+                    <img src="${user.photoUrl}" alt="${user.name}">
+                  </div>
+                  <div class="user-info">
+                    <h3>${user.name}</h3>
+                    <p><strong>ID Number:</strong> ${searchTerm}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Phone:</strong> ${user.phone}</p>
+                    <p><strong>Location:</strong> ${user.location}</p>
+                    <p><strong>Department:</strong> ${user.department}</p>
+                    <p><strong>Join Date:</strong> ${user.joinDate}</p>
+                    <p><strong>Bio:</strong> ${user.bio}</p>
+                  </div>
+                </div>
+              `;
+              
+              userDetailsContainer.innerHTML = userCard;
+            } else {
+              // Handle partial matches - search if the ID contains the search term
+              const partialMatches = Object.keys(mockUserDatabase).filter(id => 
+                id.includes(searchTerm)
+              );
+              
+              if (partialMatches.length > 0) {
+                const user = mockUserDatabase[partialMatches[0]];
+                const userCard = `
+                  <div class="user-card">
+                    <div class="user-photo">
+                      <img src="${user.photoUrl}" alt="${user.name}">
+                    </div>
+                    <div class="user-info">
+                      <h3>${user.name}</h3>
+                      <p><strong>ID Number:</strong> ${partialMatches[0]}</p>
+                      <p><strong>Email:</strong> ${user.email}</p>
+                      <p><strong>Phone:</strong> ${user.phone}</p>
+                      <p><strong>Location:</strong> ${user.location}</p>
+                      <p><strong>Department:</strong> ${user.department}</p>
+                      <p><strong>Join Date:</strong> ${user.joinDate}</p>
+                      <p><strong>Bio:</strong> ${user.bio}</p>
+                    </div>
+                  </div>
+                `;
+                
+                userDetailsContainer.innerHTML = userCard;
+              } else {
+                userDetailsContainer.innerHTML = '<p class="no-results">No user found with that ID number</p>';
+              }
+            }
+          }
+          
+          searchUserButton.addEventListener('click', searchUserDetails);
+          userDetailsInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+              searchUserDetails();
+            }
           });
         });
         </script>
         
         <style>
-        .sender-search-container {
+        .search-container {
+          display: flex;
+          gap: 20px;
           margin: 20px 0;
-          max-width: 100%;
+        }
+        
+        .search-wrapper {
+          width: 48%;
         }
         
         .search-form {
@@ -188,7 +320,8 @@
           margin-bottom: 15px;
         }
         
-        #sender-search-input {
+        #sender-search-input,
+        #user-details-input {
           flex-grow: 1;
           padding: 8px 12px;
           border: 1px solid #ced4da;
@@ -196,7 +329,8 @@
           font-size: 16px;
         }
         
-        #clear-search {
+        #clear-search,
+        #search-user {
           padding: 8px 15px;
           background-color: #6c757d;
           color: white;
@@ -206,13 +340,53 @@
           font-size: 14px;
         }
         
-        #clear-search:hover {
+        #clear-search:hover,
+        #search-user:hover {
           background-color: #5a6268;
         }
         
-        /* Add a subtle highlight to matching rows */
-        tr:not(.hidden) td {
-          transition: background-color 0.2s;
+        .user-details-container {
+          margin: 20px 0;
+          padding: 0;
+        }
+        
+        .no-results {
+          color: #6c757d;
+          font-style: italic;
+          padding: 10px 0;
+        }
+        
+        .user-card {
+          display: flex;
+          gap: 20px;
+          padding: 15px;
+          border: 1px solid #dee2e6;
+          border-radius: 6px;
+          background-color: #f8f9fa;
+        }
+        
+        .user-photo img {
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 3px solid #fff;
+          box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .user-info {
+          flex-grow: 1;
+        }
+        
+        .user-info h3 {
+          margin-top: 0;
+          margin-bottom: 10px;
+          color: #343a40;
+        }
+        
+        .user-info p {
+          margin: 5px 0;
+          color: #495057;
         }
         </style>
         <table class="table table-bordered">
