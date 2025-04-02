@@ -84,6 +84,43 @@
   .sidenav a {font-size: 18px;}
 }
   }
+
+  .custom-search-container {
+  margin: 20px 0;
+  max-width: 600px;
+}
+
+.search-form {
+  display: flex;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#search-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-right: none;
+  font-size: 16px;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-form button:hover {
+  background-color: #0055aa;
+}
+
+#search-results {
+  margin-top: 20px;
+}
 </style>
 <body>
     <div class="topnav">
@@ -94,6 +131,90 @@
       </div>
     <div class="container mt-5">
         <h2>WhatsApp AI Bot Audit Logs</h2>
+        
+        <div class="sender-search-container">
+          <div class="search-form">
+            <input type="text" id="sender-search-input" placeholder="Search by sender..." autocomplete="off">
+            <button type="button" id="clear-search">Clear</button>
+          </div>
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const searchInput = document.getElementById('sender-search-input');
+          const clearButton = document.getElementById('clear-search');
+          const table = document.querySelector('.table');
+          
+          // Search function
+          function filterTable() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            const rows = table.querySelectorAll('tr:not(:first-child)'); // Skip header row
+            
+            rows.forEach(row => {
+              const senderCell = row.querySelector('td:nth-child(2)'); // Sender is the 2nd column
+              
+              if (senderCell) {
+                const senderText = senderCell.textContent.toLowerCase();
+                
+                if (searchTerm === '' || senderText.includes(searchTerm)) {
+                  row.style.display = ''; // Show row
+                } else {
+                  row.style.display = 'none'; // Hide row
+                }
+              }
+            });
+          }
+          
+          // Event listeners
+          searchInput.addEventListener('input', filterTable);
+          
+          // Clear search and reset table
+          clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            filterTable();
+          });
+        });
+        </script>
+        
+        <style>
+        .sender-search-container {
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .search-form {
+          display: flex;
+          gap: 10px;
+          margin-bottom: 15px;
+        }
+        
+        #sender-search-input {
+          flex-grow: 1;
+          padding: 8px 12px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          font-size: 16px;
+        }
+        
+        #clear-search {
+          padding: 8px 15px;
+          background-color: #6c757d;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+        }
+        
+        #clear-search:hover {
+          background-color: #5a6268;
+        }
+        
+        /* Add a subtle highlight to matching rows */
+        tr:not(.hidden) td {
+          transition: background-color 0.2s;
+        }
+        </style>
         <table class="table table-bordered">
                 <tr>
                     <th>ID</th>
